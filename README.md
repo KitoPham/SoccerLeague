@@ -35,7 +35,7 @@ and type the follow commands in separately.
     git clone https://github.com/kitopham/SoccerLeague
 ```
 ```git
-    cd soccer-league
+    cd SoccerLeague
 ```
 
 The first line will install a local copy of the application's code onto your machine and then next will point your terminal to the application's folder.
