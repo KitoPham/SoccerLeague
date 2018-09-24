@@ -124,6 +124,7 @@ Sort: unSortedTied
 Passed
 ```
 
+*Disclaimer : For the scope of this the following test are checking based off toString() for array inputs. In a more advanced project deep comparison through checking each index of the array would be a better way to test.*
 
 The tests currently supported are:
 

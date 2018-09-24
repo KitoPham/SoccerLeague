@@ -4,6 +4,38 @@ const fs = require('fs'),
 stream = require('stream'),
 readline = require('readline');
 
+
+//Parses an input file line by line asynchronously. When parsing is
+//finished sorts the values into a ranking map assigning scores based off
+//wins and ties. Wins providing 3 pts for rank and ties providing 1 pt to
+//corresponding clubs. A ranking list going from highest to lowest
+//ranking scores is then returned.
+const calcLeagueScores = function(leagueName, callback){
+  const filePath = leagueName
+  const instream = fs.createReadStream(filePath, {encoding:'utf8'});
+  instream.on('error', (error) => {
+    return console.error("There has been an error", error);
+  });
+  let outstream = new stream;
+  const lineReader = readline.createInterface(instream, outstream);
+  let rankingMap = new Map()
+
+  lineReader.on('line', (line) => {
+    const gameArray = line.split(', ');
+    const club1Score = prepareClubName(gameArray[0].split(' '));
+    const club2Score = prepareClubName(gameArray[1].split(' '));
+    const modifiers = getModifiers(club1Score[1], club2Score[1])
+
+    updateRanking(club1Score[0], modifiers[0], rankingMap);
+    updateRanking(club2Score[0], modifiers[1], rankingMap);
+  });
+
+  lineReader.on('close', () => {
+    const sortedMap = new SortedRankMap([...rankingMap.entries()]);
+    callback(sortedMap);
+  });
+};
+
 //Combines the club name into one index and returns a tuple
 //holding only the club name as one value, and the game score as the other
 const prepareClubName =  function(score){
@@ -50,7 +82,7 @@ const updateRanking = function(clubName, modifier, rankingMap){
 }
 
 //Map class extensions for the rank maps
-class SortedRankMap extends Map {
+class SortedRankMap extends Map{
   //Entries are sorted based on values desc and then key asc
   constructor(entries){
     super(entries.sort( (a, b) => {
@@ -80,7 +112,7 @@ class SortedRankMap extends Map {
     let lastRank = 0;
     let str = ''
     let rank = 0;
-    array.forEach((entry)=>{
+    array.forEach( (entry) => {
       rank++
       const currRank = (lastScore == entry[1] ? lastRank : rank);
       lastScore = entry[1];
@@ -92,56 +124,7 @@ class SortedRankMap extends Map {
   }
 }
 
-//Parses an input file line by line asynchronously. When parsing is
-//finished sorts the values into a ranking map assigning scores based off
-//wins and ties. Wins providing 3 pts for rank and ties providing 1 pt to
-//corresponding clubs. A ranking list going from highest to lowest
-//ranking scores is then returned.
-const calcLeagueScores = function(leagueName, callback){
-  const filePath = leagueName
-  const instream = fs.createReadStream(filePath, {encoding:'utf8'});
-  instream.on('error', (error) => {
-    return console.error("There has been an error", error);
-  });
-  let outstream = new stream;
-  const lineReader = readline.createInterface(instream, outstream);
-  let rankingMap = new Map()
-
-  lineReader.on('line', (line) => {
-    const gameArray = line.split(', ');
-    const club1Score = prepareClubName(gameArray[0].split(' '));
-    const club2Score = prepareClubName(gameArray[1].split(' '));
-    const modifiers = getModifiers(club1Score[1], club2Score[1])
-
-    updateRanking(club1Score[0], modifiers[0], rankingMap);
-    updateRanking(club2Score[0], modifiers[1], rankingMap);
-  });
-
-  lineReader.on('close', () =>{
-    const sortedMap = new SortedRankMap([...rankingMap.entries()]);
-    callback(sortedMap);
-  });
-};
-
-
 /*////////////////////// Test Code ////////////////////////////*/
-const runTest = function (testName, found, expected){
-  console.log('\n'+ testName)
-  try{
-      assert.equal(found,expected);
-      console.log('Passed');
-
-  } catch(error) {
-    console.error(error)
-    console.error('Failed');
-    console.error('Found:')
-    console.error(found);
-    console.error('Expected:');
-    console.error(expected);
-  }
-
-
-}
 
 //Given an input file and an output file that holds the expected result
 //tests to make sure that the application gives back a result from the
@@ -206,6 +189,21 @@ const testSortedMap = function(test, entries, expected){
 const testSortedMapToString = function(test, entries, expected){
   var sortedMap = new SortedRankMap(entries);
   runTest(test, sortedMap.toString(), expected);
+}
+
+const runTest = function (testName, found, expected){
+  console.log('\n'+ testName)
+  try{
+      assert.equal(found,expected);
+      console.log('Passed');
+  } catch(error) {
+    console.error(error)
+    console.error('Failed');
+    console.error('Found:')
+    console.error(found);
+    console.error('Expected:');
+    console.error(expected);
+  }
 }
 
 const testEverything = function(){
