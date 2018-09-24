@@ -22,14 +22,14 @@ sorted alphabetically by team name.
 > 2\. Yaotyl's Generals, 3 pts <br />
 > 3\. Humans, 0 pts <br />
 
-
 To be able to run this application the following programs will need to be
 installed on your machine.
 * Git Bash https://git-scm.com/downloads
 * Node.Js https://nodejs.org/en/download/
 
+*Disclaimer if you've already downloaded the SoccerLeague folder onto your computer you can skip the first command and make sure that your terminal is pointed to this folder via the cd command*
 
-Once you have installed these two platforms, launch your Terminal application
+Once you have installed these two programs, launch your Terminal application
 and type the follow commands in separately.
 ```git
     git clone https://github.com/kitopham/SoccerLeague
