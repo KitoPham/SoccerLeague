@@ -23,7 +23,7 @@ sorted alphabetically by team name.
 > 3\. Humans, 0 pts <br />
 
 
-To be able to run this application the following programs will be need to be
+To be able to run this application the following programs will need to be
 installed on your machine.
 * Git Bash https://git-scm.com/downloads
 * Node.Js https://nodejs.org/en/download/
@@ -38,8 +38,7 @@ and type the follow commands in separately.
     cd soccer-league
 ```
 
-This will install a local copy of the application's code onto your machine and
-then it points your terminal to the application's folder.
+The first line will install a local copy of the application's code onto your machine and then next will point your terminal to the application's folder.
 
 Next enter in the command below to get started
 ```git
@@ -52,18 +51,19 @@ You should get an output that looks like this.
 >3\. Snakes, 1 pt <br />
 >5\. Grouches, 0 pts <br />
 
-If you've received this output then congrats!!! You're all set to start
+If you've received this output then congrats!! You're all set to start
 using the Soccer League command line tool! To be able to run your own input
-just type in the previous command but replace ```sample-input.txt``` with
+just type in the previous command but replace `sample-input.txt` with
 your own file name. Just remember to make sure that each line of your input is
-constructed like this.
+constructed properly like as followed.
 >Flying Purple Iguanas 3, Not So Flying Elephants 4
+*Disclaimer: The application assumes that no team name will have a comma*
 
 #### Customize
 The code for this application is modularized such that it can be modified for
 personal use easily. The following snippet is from the `SoccerLeagueProgram.js`
-file. The application checks the keywords after ```node SoccerLeagueProgram```
-and runs whatever code is within the specified case.
+file. The application checks the keywords after `node SoccerLeagueProgram`
+and runs whatever code is within the specified case body.
 
 ```Javascript
 switch(process.argv[2]){
