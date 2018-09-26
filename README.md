@@ -30,7 +30,7 @@ installed on your machine.
 *Disclaimer if you've already downloaded the SoccerLeague folder onto your computer you can skip the first command and make sure that your terminal is pointed to this folder via the cd command*
 
 Once you have installed these two programs, launch your Terminal application
-and type the follow commands in separately.
+and type the following commands in separately.
 ```git
     git clone https://github.com/kitopham/SoccerLeague
 ```
@@ -57,6 +57,7 @@ just type in the previous command but replace `sample-input.txt` with
 your own file name. Just remember to make sure that each line of your input is
 constructed properly like as followed.
 >Flying Purple Iguanas 3, Not So Flying Elephants 4
+
 *Disclaimer: The application assumes that no team name will have a comma*
 
 #### Customize
